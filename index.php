@@ -37,10 +37,10 @@
 	}*/
 	//$_POST['matric'] = 160064;
 	//$_POST['passcode'] = 'fm';
-	if(isset($_POST['matric']))
+	if(true)//isset($_POST['matric']))
 	{
-		$matric = $_POST['matric'];
-		$pwd = $_POST['passcode'];
+		$matric = 160245;//$_POST['matric'];
+		$pwd = '';//$_POST['passcode'];
 		$pwd = sha1($pwd);
 		$login = mysqli_query($con,"select firstname,lastname,s.student_id student_id,gender,email,passport,phone_1,phone_2,cd_id,tag,cat_id,c_id,date_of_birth,summer from student_table s join class_details_tb c using(cd_id) where s.student_id = $matric and password = '$pwd'");
 		$terms = mysqli_query($con,"select termd_id from term_details_tb join term_tb using(term_id) where student_id = $matric and current_date between begins and ends");
@@ -110,13 +110,16 @@
 <script src="js/Chart.js"></script>
 <!-- //chart -->
  <!-- js-->
-<script src="js/jquery-1.11.1.min.js"></script>
+<!--<script src="js/jquery-1.11.1.min.js"></script>-->
+<script src="js/jquery-3.1.1.js"></script>
+<script src="js/jquery-ui.js"></script>
 <script src="js/modernizr.custom.js"></script>
 <!--webfonts-->
 <link href='//fonts.googleapis.com/css?family=Roboto+Condensed:400,300,300italic,400italic,700,700italic' rel='stylesheet' type='text/css'>
 <!--//webfonts--> 
 <!--animate-->
 <link href="css/animate.css" rel="stylesheet" type="text/css" media="all">
+<link type="text/css" rel="stylesheet" href="css/jquery-ui.css" />
 <script src="js/wow.min.js"></script>
 	<script>
 		 new WOW().init();
@@ -284,6 +287,7 @@
         <!--//footer-->
 	</div>
 	<!-- Classie -->
+<!--
 		<script src="js/classie.js"></script>
 		<script>
 			var menuLeft = document.getElementById( 'cbp-spmenu-s1' ),
@@ -304,6 +308,7 @@
 				}
 			}
 		</script>
+-->
 	<!-- Bootstrap Core JavaScript --> 
 		
         <script type="text/javascript" src="js/bootstrap.min.js"></script>
@@ -317,7 +322,23 @@
 		<script src="js/scripts.js"></script>
 		<!--//scrolling js-->
 		
-		
+		<script>
+			$(document).ready(function(){
+				$("#showLeftPush").click(function(){
+					if($("nav.cbp-spmenu").is(':visible')){
+						$("nav.cbp-spmenu").toggle('slide',{direction:'right'},1000,function(){
+							$("#page-wrapper").animate({'margin':'0'});
+						});
+						
+					}else{
+						$("#page-wrapper").animate({'margin-right':'19.3em'},function(){
+							$("nav.cbp-spmenu").toggle('slide',{direction:'left'},1000);
+						});
+					
+					}
+				});
+			})
+		</script>
 		
 		
 		
