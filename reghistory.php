@@ -1,10 +1,14 @@
 <?php
 session_start();
+include('dbcon.php');
 if (isset( $_SESSION['stid'])){
 $cdid = $_SESSION['cdid'];
 $_SESSION['page'] = 'reg.php';$cdid = $_SESSION['cdid'];
 $_SESSION['page'] = 'reg.php';
+$sic=array();
+$sub = array();
 ?>
+
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -55,7 +59,9 @@ $_SESSION['page'] = 'reg.php';
 		{ 
 			$sub[$r['sub_id']] = $r['ctitle'];
 			$sic[$r['sub_id']] = $r['title'].' '.$r['firstname'].' '.$r['lastname'];
+
 		}
+		
 		$days = mysqli_query($con,"select day from days_table");
 		while($day = mysqli_fetch_array($days))
 		{

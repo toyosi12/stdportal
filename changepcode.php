@@ -54,7 +54,7 @@ if (isset( $_SESSION['stid']))
 									<div class="widget-shadow login-form-shadow" data-example-id="basic-forms"> 
 										<div class="input-info">
 											<h3>Change Passcode :</h3><small><font color="#FF9900"><?php if(isset($message)){
-												 echo $message; } echo "message"; ?></font></small>
+												 echo $message; }// echo "message"; ?></font></small>
 										</div>
 										<div class="form-body form-body-info">
 											<form data-toggle="validator" action="changepcode2.php" method="post"   novalidate>

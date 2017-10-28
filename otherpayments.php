@@ -15,7 +15,7 @@ include("dbcon.php");
 <head>
 
 <title>NBTS</title>
-
+<link href="css/bootstrap.css" rel='stylesheet' type='text/css' />
 <link href="css/style.css" rel="stylesheet" type="text/css" media="all" />
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -58,45 +58,45 @@ function calculatebankcharges()
 		
 }
 </script>
-
+<style>
+	table th{
+		background-color: #008000;
+		color:#fff;
+	}
+</style>
 </head>
 
-<body class="cbp-spmenu-push">
-	<div class="main-content" style="padding:2%;">
-    <div class="panel panel-widget">
-
-				 
-
-				<div class="section group">
-
-				 <div class="col span_2_of_contact">
-
-				  <div class="contact-form"><fieldset><legend></legend>
-
-				  <h3 class="form-section-title"><tr><td width="30%"></td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-
-				  <td>Other Payments</td></tr></h3><div class="control-group"></div><div class="control-group">
-
-				    <div class="controls"><span class="help-block">Make payment for any other bill apart from tution bill. If you are making payment for tuition. Please click on the 'Pay Tuition' Link<br /> 
-
-			        </span></div></div>
-
-				  <div class="controls">
-					<form action="otherpayments2.php" method="post" form="f1">
-                  <table width="100%"><tr><th width="5%">#</th><th >Service or Product Description</th><th></th><th>Amount (N)</th></tr>
-                  <tr valign="top"><td>1.</td><td align="left"><input type="text" title="Enter the description of what you are paying for here" placeholder="Enter the description of what you are paying for here" size="80" name="pdesc" id="pdesc" /></td><td></td><td><input type="text"  name="pamount" id="pamount" required title="Enter Amount (in digit without comma)" placeholder="Amount (in digit without comma)" onKeyUp="calculatebankcharges()" />
+<body style="padding-top: 30px;">
+	<div class="container-fluid">
+		<h3 class="text-center" style="color: #008000">Other Payments</h3>
+		<hr />
+		<span class="help-block text-center">Make payment for any other bill apart from tution bill. If you are making payment for tuition. Please click on the 'Pay Tuition' Link<br /> </span>
+		<div class="col-md-12 col-sm-12">
+		<form action="otherpayments2.php" method="post" form="f1">
+<table class="table table-bordered"><tr><th style="width:5%">#</th><th  style="width:60%">Service or Product Description</th><th style="width:35%">Amount (N)</th></tr>
+                  <tr><td>1.</td><td><input type="text" title="Enter the description of what you are paying for here" class="form-control" placeholder="Enter the description of what you are paying for here" name="pdesc" id="pdesc" /></td><td><input type="text"  name="pamount" id="pamount" required title="Enter Amount (in digit without comma)" placeholder="Amount (in digit without comma)" class="form-control" onKeyUp="calculatebankcharges()" />
 </td></tr>
-<tr><td></td><td align="left">Bank Charges</td><td></td><td><input type="text" name="bcharges" id="bcharges" disabled /></td></tr>
-<tr><td></td><td align="left">Total</td><td></td><td><input type="text" name="tamount" id="tamount" disabled value="0" /><input type="hidden" name="tid" value="<?php echo $t ?>" /></td></tr>
+<tr><td></td><td>Bank Charges</td><td><input type="text" name="bcharges" id="bcharges" disabled class="form-control" /></td></tr>
+<tr><td></td><td align="left">Total</td><td><input type="text" name="tamount" id="tamount" disabled value="0" class="form-control" /><input type="hidden" name="tid" value="<?php echo $t ?>" class="form-control" /></td></tr>
 <tr><td></td><td align="left"><u><div id='inwords'>Amount in Words :</div> </u></td></tr>
 <tr><td colspan="4">
 
-<input type="submit" value="Proceed to Payment Page" name="paybutton" id="paybutton" />
+<input type="submit" value="Proceed to Payment Page" name="paybutton" id="paybutton" class="btn btn-success" />
 
 </td></tr>
                  
 
-                  </table>
+          </table>
+		</form>
+	</div>
+			       
+	</div>
+				 
+				  <!--   <div class="controls"></div></div>
+
+				  <div class="controls">
+					
+                  
 				  </fieldset></form>
 
             
@@ -109,7 +109,7 @@ function calculatebankcharges()
 
 			  </div>
 
-			</div>
+			</div> -->
 
 	
 

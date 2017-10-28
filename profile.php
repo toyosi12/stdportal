@@ -1,3 +1,4 @@
+
 <?php
 session_start();
 if (isset( $_SESSION['stid'])){
@@ -32,9 +33,7 @@ if (isset( $_SESSION['stid'])){
 		$ins = mysqli_query($con,"update student_table set firstname = '$fname',lastname = '$lname', middlename = '$mname',phone_1 = '$phone1',phone_2 = '$phone2',email = '$email',state_of_origin = '$state',date_of_birth ='$dob' ,gender = '$gen',address = '$add',nationality = '$nat',marital_status='$mstatus',rfullname_1 = '$nfname',rphone1_1 = '$nphone',remail_1 = '$nemail' where student_id = $matric");
 	if ($ins){
 		echo "
-		<script>
-			alert ('Profile Updated');
-		</script>
+		<div class='alert alert-success text-center'>Profile updated</div>
 		";
 		}
 		else{
@@ -112,6 +111,7 @@ if (isset( $_SESSION['stid'])){
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="keywords" content="" />
+<script src="js/jquery-3.1.1.js"></script>
 <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
 <!-- Bootstrap Core CSS -->
 <link href="css/bootstrap.css" rel='stylesheet' type='text/css' />
@@ -126,7 +126,7 @@ if (isset( $_SESSION['stid'])){
 <script src="js/Chart.js"></script>
 <!-- //chart -->
  <!-- js-->
-<script src="js/jquery-1.11.1.min.js"></script>
+<!--<script src="js/jquery-1.11.1.min.js"></script>-->
 <script src="js/modernizr.custom.js"></script>
 <!--webfonts-->
 <link href='//fonts.googleapis.com/css?family=Roboto+Condensed:400,300,300italic,400italic,700,700italic' rel='stylesheet' type='text/css'>
@@ -134,6 +134,7 @@ if (isset( $_SESSION['stid'])){
 <!--animate-->
 <link href="css/animate.css" rel="stylesheet" type="text/css" media="all">
 <script src="js/wow.min.js"></script>
+
 	<script>
 		 new WOW().init();
 	</script>
@@ -146,20 +147,52 @@ if (isset( $_SESSION['stid'])){
 	input,select { width:80%;
 					height:30px;
 					margin:2%; border:0px; color:green;}
-	.dis {  background:#FFF;}
+/*	.dis {  background:#FFF;}*/
+	._header{
+		width:100%;
+		border-bottom: solid 1px #008000;
+		height: 90px;
+	}
 	
+/*	.row{margin-top:20px;}*/
+	div#pass img{
+		width:60px;
+		height:60px;
+		border-radius:60px;
+	}
+	input[type='button'],input[type='submit'],input[type='file']{
+		border:solid 1px #008000;
+		background:none;
+		transition:background 1s;
+	}
+	input[type='button']:hover,input[type='submit']:hover{
+		background-color: #008000;
+		color:#fff;
+	}
+	.form-control{background:none;border: none;border-bottom:1px solid #008000;box-shadow:none;}
+	.form-control[disabled]{background:none;}
+	.form-con{background:#fff;border-radius:4px;box-shadow: 0 0 2px;border:solid 1px #ccc;}
+	label{font-weight:bold}
 </style>
 <script>
 	$(document).ready(function() {
     $(".dis").attr("disabled",true);
-	$("#save, #imgbtn, #imgsub").hide();
+	$("#save, #imgbtn, #imgsub,#up").hide();
 	$("#edit").click(function(){
 		$(".dis").removeAttr("disabled");
+		$(".form-control").addClass('form-con');
 		$("#save").show();
 	});
 	$("#chgimg").click(function(){
-		$("#imgbtn, #imgsub").show();
+		$(this).hide();
+		$("#imgbtn, #imgsub,#up").addClass('pull-right').slideDown();
 	});
+		$("#pass img").mouseover(function(){
+				$(this).animate({'width':'100px','height':'100px','borderRadius':'100px'})
+			});
+		$("#pass img").mouseout(function(){
+				$(this).animate({'width':'60px','height':'60px','borderRadius':'60px'})
+			});
 	
 });
 
@@ -167,12 +200,7 @@ if (isset( $_SESSION['stid'])){
 
 <!--//Metis Menu -->
 </head> 
-<body class="cbp-spmenu-push">
-	<div class="main-content" style="padding:2%;">
-					<div class="progressbar-heading grids-heading">
-					</div>
-					<div class="panel panel-widget">
-						<div class="block-page">
+<body class="cbp-spmenu-push" style="background:#fff;">
 							<?php 
 								 $select = mysqli_query($con,"select * from student_table where student_id =".$_SESSION['stid']);
 								  while($st = mysqli_fetch_array($select))
@@ -194,33 +222,95 @@ if (isset( $_SESSION['stid'])){
 									$nemail = $st['remail_1'];
 								  }
 							?>
-                            
-							<div class="contact-form">
-				 <tr><td width="30%"><img src="<?php echo $_SESSION['stphoto'] ?>" width="70" height="60" /></td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-				  <td><b style="color:green; font-size:20px;">Profile Page</b></td></tr>
-                  
-                 
-                 <span class="help-block"> 
-                 <p>
-                   <input type="button" name="button2" id="chgimg" style="width:15%; margin:0px;" value="Change Image">
-                   Max Size : 40kb
-                   <form method="post" action="profile.php" enctype="multipart/form-data" id="imgform">
-                   <input type="file" name="imgfile" id="imgbtn" style="width:15%; margin:0px;" value="Change Image">
-                   <input type="submit" name="imgsub" id="imgsub" style="width:10%; margin:1px;" /></form>
-                   
-                   <form id="form1" action="profile.php" class="form-horizontal" method="POST" style="color:green;"><fieldset>
-                 <table width="100%"><tr align="left"><th colspan="2">           
-Personal Information</th><th colspan="2">Contact Information</th><th width="4%"></th><th width="2%"></th><th width="2%"></th><th width="3%"></th></tr><tr><td width="20%">           
-Surname:</td><td width="28%"><input type="text" name="lname"  value="<?php echo $lname; ?>" id="lname" class="dis" ></td><td width="18%">Phone 1</td><td width="23%"><input type="text" value="<?php echo $p1; ?>" id="phone1" class="dis" name="phone1" ></td></tr>
-<tr><td>           
-Firstname:</td><td><input type="text" name="fname" id="fname" value="<?php echo $fname; ?>" class="dis" ></td><td>Phone 2</td><td><input type="text" name="phone2" id="phone2" value="<?php echo $p2; ?>" class="dis" ></td></tr>
-<tr><td>           
-Middlename:</td><td><input id="mname" name="mname" type="text" value="<?php echo $mname; ?>" class="dis" ></td><td>e-mail</td><td><input type="text" id="email" name="email" value="<?php echo $em; ?>" class="dis" ></td></tr>
-<tr><td>           
-Date of Birth:</td>
-<td><input type="text" id="dob" name="dob" title="Format: 1990-10-10" placeholder="<?php echo $dob; ?>" class="dis" value="<?php echo $dob; ?>"  /></td><td>Address</td><td><input type="text" id="address" name="address" value="<?php echo $add ?>"></td><td></td></tr>
-<tr><td>           
-Nationality:</td><td><div class="controls"><select id="national" name="national" class="dis" >
+                           <div class="container-fluid" style="padding-left:4%;padding-right:4%;">
+                           		<div class="row" style="margin-top:10px;margin-bottom:10px;">
+                           			<div class="col-md-4 col-sm-4">
+                           				<h3>Profile Page</h3>
+                           			</div>
+                           			<div class="col-md-8 col-sm-8" id="pass"><img src="<?php echo $stphoto = (isset($_SESSION['stphoto']))?$_SESSION['stphoto']:'images/placeholder.png'; echo $stphoto; ?>"  class="img-responsive pull-right" /></div>
+                           		</div>
+                           		<div class="row" style="border-top:solid #008000 1px;">
+                           			<div class="col-md-7 col-sm-7 pull-right">
+                           			<form method="post" action="profile.php" enctype="multipart/form-data" id="imgform">
+                           			<input type="submit" name="imgsub" id="imgsub" style="width:120px;" />
+									   <input type="file" name="imgfile" id="imgbtn" style="width:150px;display:inline-block" value="Change Image">
+                   					<input type="button" name="button2" id="chgimg" style="width:120px" value="Change Image" class="pull-right"><br />
+                         			<span id="up">Max-size:40px</span>
+                          			</form>
+                           			</div>
+                           		</div>
+                           		<form id="form1" action="profile.php" class="form" method="POST" style="color:#476A15;">
+                           		<div class="row">
+                           			<div class="col-md-6 col-sm-6">
+										<h4><u>Personal Information</u></h4><br />
+                           			</div>
+                           			<div class="col-md-6 col-sm-6">
+                           				<h4><u>Contact Information</u></h4><br />
+                           			</div>
+                           		</div>
+                           		<div class="row">
+                           			<div class="col-md-2 col-sm-2">
+                           				<label>Surname:</label>
+                           			</div>
+                           			<div class="col-md-4 col-sm-4">
+                           				<input type="text" name="lname"  value="<?php echo $lname; ?>" id="lname" class="form-control dis" >
+                           			</div>
+                           			<div class="col-md-2 col-sm-2">
+                           				<label>Phone 1:</label>
+                           			</div>
+                           			<div class="col-md-4 col-sm-4">
+                           				<input type="text" value="<?php echo $p1; ?>" id="phone1" class="form-control dis" name="phone1" >
+                           			</div>
+                           		</div>
+                           		<div class="row">
+                           			<div class="col-md-2 col-sm-2">
+                           				<label>Firstname:</label>
+                           			</div>
+                           			<div class="col-md-4 col-sm-4">
+                           				<input type="text" name="fname" id="fname" value="<?php echo $fname; ?>" class="form-control dis" >
+                           			</div>
+                           			<div class="col-md-2 col-sm-2">
+                           				<label>Phone 2:</label>
+                           			</div>
+                           			<div class="col-md-4 col-sm-4">
+                           				<input type="text" name="phone2" id="phone2" value="<?php echo $p2; ?>" class="form-control dis" >
+                           			</div>
+                           			
+                           		</div>
+                           		<div class="row">
+                           			<div class="col-md-2 col-sm-2">
+                           				<label>Middlename:</label>
+                           			</div>
+                           			<div class="col-md-4 col-sm-4">
+                           				<input id="mname" name="mname" type="text" value="<?php echo $mname; ?>" class="form-control dis" >
+                           			</div>
+                           			<div class="col-md-2 col-sm-2">
+                           				<label>Email:</label>
+                           			</div>
+                           			<div class="col-md-4 col-sm-4">
+                           				<input type="text" id="email" name="email" value="<?php echo $em; ?>" class="form-control dis" >
+                           			</div>
+                           		</div>
+                           		<div class="row">
+                           			<div class="col-md-2 col-sm-2">
+                           				<label>Date of Birth:</label>
+                           			</div>
+                           			<div class="col-md-4 col-sm-4">
+                           				<input type="text" id="dob" name="dob" title="Format: 1990-10-10" placeholder="<?php echo $dob; ?>" class="form-control dis" value="<?php echo $dob; ?>"  />
+                           			</div>
+                           			<div class="col-md-2 col-sm-2">
+                           				<label>Address:</label>
+                           			</div>
+                           			<div class="col-md-4 col-sm-4">
+                           				<input type="text" id="address" name="address" value="<?php echo $add ?>" class="dis form-control">
+                           			</div>
+                           		</div>
+                           		<div class="row">
+                           			<div class="col-md-2 col-sm-2">
+                           				<label>Nationality:</label>
+                           			</div>
+                           			<div class="col-md-4 col-sm-4">
+                           				<select id="national" name="national" class="form-control dis" >
 	                     <option value="<?php echo $national ?>"><?php echo $national ?></option>
 						 <option value="Algeria">Algeria</option>
 	                     <option value="Angola">Angola</option>
@@ -299,9 +389,19 @@ Nationality:</td><td><div class="controls"><select id="national" name="national"
 	                     <option value="Zaire">Zaire</option>
 	                     <option value="Zambia">Zambia</option>
 	                     <option value="Zimbabwe">Zimbabwe</option>
-                       </select></div></td><th colspan="2" align="left">Next of Kin Contact Information</th></tr>
-<tr>
-  <td>State of Origin(for Nigerians):</td><td><select name="state" id="state" class="dis" >
+                       </select>
+                           			</div>
+                           			<div class="col-md-6 col-sm-6">
+										<br /><h4><u>Next of Kin Contact Information</u></h4><br />
+                           			</div>
+                           			
+                           		</div>
+                           		<div class="row">
+                           			<div class="col-md-2 col-sm-2">
+                           				<label>State of Origin(for Nigerians):</label>
+                           			</div>
+                           			<div class="col-md-4 col-sm-4">
+                           				<select name="state" id="state" class="form-control dis" >
                       <option value="<?php echo $state ?>"><?php echo $state ?></option>
 					 	
 					  <option value="Abia">Abia</option>
@@ -340,23 +440,60 @@ Nationality:</td><td><div class="controls"><select id="national" name="national"
 					  <option value="Taraba">Taraba</option>
 					  <option value="Yobe">Zamfara</option>
 					  <option value="FCT Abuja">FCT Abuja</option>
-                      </select></td><td>Full Name:</td><td><input type="text" name="nfname" id="nfname" value="<?php echo $nfname; ?>" class="dis" ></td></tr>
-					  <tr><td>Gender</td><td><select name="gender" id="gender" class="dis" ><option value="">Select--gender</option><?php if($gender <> 'Male'){?><option value="Male">Male</option><?php } else{ ?><option value="Male" selected>Male</option><?php } ?><?php if($gender <> 'Female'){?><option value="Female">Female</option><?php }else{ ?><option value="Female" selected>Female</option><?php } ?></select></td><td>Office Phone</td><td><input type="text" name="nphone" id="nphone" value="<?php echo $nphone; ?>" class="dis" ></td></tr>
-					  
-					  <tr><td>Marital Status:</td><td><select name="mstatus" id="mstatus" value="<?php echo $mstatus; ?>" class="dis" ><option value="">Select--Status</option><?php if($mstatus <> 'Single'){?><option value="Single">Single</option><?php } else{ ?><option value="Single" selected>Single</option><?php } ?><?php if($mstatus <> 'Married'){?><option value="Married">Married</option><?php }else{ ?><option value="Married" selected>Married</option><?php } ?></select></td><td>Email</td><td><input type="text" name="nemail" id="nemail" value="<?php echo $nemail; ?>" class="dis" ></td></tr>
-  <tr>
-  <td colspan="3" align="center" valign="top"><input type="submit" name="savep" id="save" value="Save Information" /></td><td align="right" valign="bottom"><input type="button" name="button" value="Edit" id="edit" />  </td></tr>
-</table>
-
-</span>
-                  
-                  
-                  
-					</div>
-				</div>
-				<!--//grids-->
-				
-			</div>
+                      </select>
+                           			</div>
+                           			<div class="col-md-2 col-sm-2">
+                           				<label>Full Name:</label>
+                           			</div>
+                           			<div class="col-md-4 col-sm-4">
+                           				<input type="text" name="nfname" id="nfname" value="<?php echo $nfname; ?>" class="form-control dis" >
+                           			</div>
+                           		</div>
+                           		<div class="row">
+                           			<div class="col-md-2 col-sm-2">
+                           				<label>Gender:</label>
+                           			</div>
+                           			<div class="col-md-4 col-sm-4">
+                           				<select name="gender" id="gender" class="form-control dis" ><option value="">Select--gender</option><?php if($gender <> 'Male'){?><option value="Male">Male</option><?php } else{ ?><option value="Male" selected>Male</option><?php } ?><?php if($gender <> 'Female'){?><option value="Female">Female</option><?php }else{ ?><option value="Female" selected>Female</option><?php } ?>
+                       </select>
+                           			</div>
+                           			<div class="col-md-2 col-sm-2">
+                           				<label>Office Phone</label>
+                           			</div>
+                           			<div class="col-md-4 col-sm-4">
+                           				<input type="text" name="nphone" id="nphone" value="<?php echo $nphone; ?>" class="form-control dis" >
+                           			</div>
+                           		</div>
+                           		<div class="row">
+                           			<div class="col-md-2 col-sm-2">
+                           				<label>Marital Status:</label>
+                           			</div>
+                           			<div class="col-md-4 col-sm-4">
+                           				<select name="mstatus" id="mstatus" value="<?php echo $mstatus; ?>" class="form-control dis" ><option value="">Select--Status</option><?php if($mstatus <> 'Single'){?><option value="Single">Single</option><?php } else{ ?><option value="Single" selected>Single</option><?php } ?><?php if($mstatus <> 'Married'){?><option value="Married">Married</option><?php }else{ ?><option value="Married" selected>Married</option><?php } ?></select>
+                           			</div>
+                           			<div class="col-md-2 col-sm-2">
+                           				<label>Email</label>
+                           			</div>
+                           			<div class="col-md-4 col-sm-4">
+                           				<input type="text" name="nemail" id="nemail" value="<?php echo $nemail; ?>" class="form-control dis" >
+                           			</div>
+                           		</div>
+<!--                           			 		-->
+                           			 	
+                           			 		
+<!--                           			 		-->
+									
+							   <div class="row">
+							   		<div class="col-md-6 col-sm-6 col-xs-6">
+							   		<input type="submit" name="savep" id="save" value="Save Information" style="width:150px;" />
+								   </div>
+								   <div class="col-md-6 col-sm-6 col-xs-6">
+								   <input type="button" name="button" value="Edit" id="edit" style="width:150px;" class="pull-right" />
+								   </div>
+							   </div>
+							   </form>
+                           		</div>
+						
  	</div>
 	<!-- Classie -->
 		<script src="js/classie.js"></script>
@@ -378,6 +515,7 @@ Nationality:</td><td><div class="controls"><select id="national" name="national"
 					classie.toggle( showLeftPush, 'disabled' );
 				}
 			}
+			
 		</script>
 	<!-- Bootstrap Core JavaScript --> 
 		
@@ -399,6 +537,7 @@ Nationality:</td><td><div class="controls"><select id="national" name="national"
 		<script src="js/jquery.nicescroll.js"></script>
 		<script src="js/scripts.js"></script>
 		<!--//scrolling js-->
+		
 </body>
 </html>
 <?php
@@ -413,4 +552,5 @@ else{
 	";
 	
 }
+
 ?>

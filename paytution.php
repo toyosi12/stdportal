@@ -1,3 +1,4 @@
+<!-- <<<<<<< HEAD -->
 <?php session_start(); 
 $txn_ref = 'NBTS'.time();
 
@@ -23,7 +24,7 @@ include("dbcon.php");
 <head>
 
 <title>NBTS</title>
-
+<link href="css/bootstrap.css" rel='stylesheet' type='text/css' />
 <link href="css/style.css" rel="stylesheet" type="text/css" media="all" />
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -86,10 +87,16 @@ function checkamt()
 	}
 }
 </script>
-
+<style>
+table th{
+	background-color:#008000;
+	color:#fff;
+}
+</style>
 </head>
 
-<body class="cbp-spmenu-push">
+<body>
+	<div class="container-fluid">
 	<div class="main-content" style="padding:2%;">
     <div class="panel panel-widget">
 
@@ -105,17 +112,16 @@ function checkamt()
 
 				  <div class="contact-form"><fieldset><legend></legend>
 
-				  <h3 class="form-section-title"><tr><td width="30%"></td><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+				  <h3 class="form-section-title text-center" style="color:#008000;">
+				  School Fee Bill</h3><div class="control-group"></div><div class="control-group">
 
-				  <td>School Fee Bill</td></tr></h3><div class="control-group"></div><div class="control-group">
-
-				    <div class="controls"><span class="help-block">For any other payment apart from the reqular school fee payment please use the 'other payment' link.<br /><marquee scrollamount="3"><font size = 2 color=red>Please note that this system will only be fully functional by next session. Manual process is still allowed for now. If you are having issues using this please contact the ict office on 08062444583 or send a mail to ict@nbts.edu.ng</font></marquee>
+				    <div class="controls"><span class="help-block text-center">For any other payment apart from the reqular school fee payment please use the 'other payment' link.<br /><marquee scrollamount="3"><font size = 2 color=red>Please note that this system will only be fully functional by next session. Manual process is still allowed for now. If you are having issues using this please contact the ict office on 08062444583 or send a mail to ict@nbts.edu.ng</font></marquee>
 
 			        </span></div></div>
 
 				  <div class="controls">
 					<form action="otherpayments2.php" method="post" form="f1" onSubmit="return checkamt()">
-                  <table width="100%"><tr><th width="5%">#</th><th >Service or Product Description</th><th></th><th>Amount (N)</th></tr>
+                  <table class="table table-bordered"><tr><th width="5%">#</th><th >Service or Product Description</th><th>Amount (N)</th></tr>
                   <?php 
 				  $matric = $_SESSION['matric'];
 				  $cid = $_SESSION['cdid'];
@@ -209,7 +215,7 @@ $charges = $amount * 0.015;
     <input name="cust_id" type="hidden" value="<?php echo $cust_id; ?>"/>
     <input name="site_name" type="hidden" value=""/>
     <input name="cust_name" type="hidden" value="<?php echo $customerName; ?>" />
-    <input name="hash" type="hidden" id="hash" value="<?php echo $hash;  ?>" />
+    <input name="hash" type="hidden" id="hash" value="<?php echo 'hash';  ?>" />
 <!-- to this place -->
 
 </td></tr>
@@ -219,7 +225,7 @@ $charges = $amount * 0.015;
 <tr><td></td><td align="left"><u><div id='inwords'>Amount in Words :</div> </u></td></tr>
 <tr><td colspan="4">
 
-<input type="submit" value="Proceed to Payment Page" name="paybutton" id="paybutton" />
+<input type="submit" value="Proceed to Payment Page" name="paybutton" id="paybutton" class="btn btn-success" />
 
 </td></tr>
 
@@ -245,14 +251,10 @@ $charges = $amount * 0.015;
 <script>
 calculatecharges(<?php echo $arem ?>);
 </script>
+</div>
 </body>
 
 </html>
 
 <?php } ?>
-
-    	
-
-    	
-
             

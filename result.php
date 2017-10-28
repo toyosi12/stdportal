@@ -54,53 +54,70 @@ elseif(isset($_GET['dc']))
 <html>
 <head>
 <title><?php echo $_SESSION['abr'] ?> Student Result</title>
+<link href="css/bootstrap.css" rel='stylesheet' type='text/css' />
 <link href="css/style.css" rel="stylesheet" type="text/css" media="all" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
 <script
   src="http://code.jquery.com/jquery-3.2.1.min.js" ></script>
+  <script src="js/jquery-3.1.1.js"></script>
 <script>
-
+$(function(){
+	$("#sbanner").hide();
+	});
 var printelem = '#page1';
 
 	var printallelem = '';
 
-    function printElem()
-    {
-        Popup($(".contact-form").html());
+    // function printElem()
+    // {
+    //     Popup($(".contact-form").html());
 		
 
-    }
+    // }
 
-    function Popup(data) 
-    {
+    // function Popup(data) 
+    // {
 
-        var mywindow = window.open('', 'Terminal Report', 'height=400,width=600');
+    //     var mywindow = window.open('', 'Terminal Report', 'height=400,width=600');
 
-        mywindow.document.write('<html><head><title>Semester Result</title>');
+    //     mywindow.document.write('<html><head><title>Semester Result</title>');
 
-        /*optional stylesheet*/ //mywindow.document.write('<link rel="stylesheet" href="main.css" type="text/css" />');
+    //     /*optional stylesheet*/ //mywindow.document.write('<link rel="stylesheet" href="main.css" type="text/css" />');
 
-        mywindow.document.write('</head><body >');
+    //     mywindow.document.write('</head><body >');
 
-        mywindow.document.write(data);
+    //     mywindow.document.write(data);
 
-        mywindow.document.write('</body></html>');
-
-
-
-        mywindow.print();
-
-        mywindow.close();
+    //     mywindow.document.write('</body></html>');
 
 
 
-        return true;
+    //     mywindow.print();
 
-    }
+    //     mywindow.close();
 
 
+
+    //     return true;
+
+    // }
+
+function printElem(){
+	var win = window.open('','Terminal Report','height:400, width:600');
+	$("#sbanner").show();
+	win.document.write('<html><head><title>'+document.title+'</title>');
+	win.document.write('<link type="text/css" rel="stylesheet" href="css/bootstrap.css" /><style>div#pass img{width:100px;height:100px;border-radius:60px;}</style>');
+	win.document.write('</head><body style="background-image: url(images/water_mark.png);">');
+	win.document.write(document.getElementById('body').innerHTML);
+	win.document.write('</body></html>');
+	win.document.close();
+	win.document.focus();
+	win.print();
+	win.close();
+	return true;
+}
 
 function deletes(v)
 {
@@ -110,17 +127,32 @@ function deletes(v)
 	}
 }
 </script>
+<style>
+div#pass img{
+		width:60px;
+		height:60px;
+		border-radius:60px;
+	}
+table th{
+	background-color:#008000;
+	color:#fff;
+}
+</style>
 </head>
-<body class="cbp-spmenu-push">
-	<div class="main-content" style="padding:2%;">
-    <div class="panel panel-widget">
-    				<div class="section group">
-				 <div class="col span_2_of_contact">
+<body id="body">
+	<div class="container-fluid">
+		<div id="sbanner" style="background-color:#090;height:70px">
+                  <img style="height:70px;width: 100%;" alt="School Banner Here" src="<?php echo '../edozzier/'.$_SESSION['banner']; ?>" />
+        </div>
 				  <div class="contact-form"><form id="actForm" class="form-horizontal" method="POST"><fieldset><legend></legend>
-				  <h3 class="form-section-title"><tr><td width="30%" align="left"></td><td colspan="2"><?php echo $_SESSION['abr'] ?> Semester Result<br /><small><?php echo $_SESSION['stname']; echo "[".$_SESSION['matric']."]"; ?></small></td></tr></h3><div class="control-group"></div><div class="control-group">
-				    <div class="controls">
-				      <p class="help-block">If you do not find any of the courses you are offering here, </p>
-				      <p class="help-block">you probably have not added it in the course registration section. Please ensure you do this as soon as possible before lecturers start computing result else you might not have your result computed. </p>
+				  <div class="col-md-6 col-sm-6">
+				  <h3 class="form-section-title" style="color:#008000;"><?php echo $_SESSION['abr'] ?> Semester Result<br /><small><?php echo $_SESSION['stname']; echo "[".$_SESSION['matric']."]"; ?></small></h3>
+				  </div>
+				  <div class="col-md-6 col-sm-6" id="pass">
+				  		<img src="images/placeholder.png<?php //echo $stphoto = (isset($_SESSION['stphoto']))?$_SESSION['stphoto']:'images/placeholder.png'; echo $stphoto; ?>"  class="img-responsive pull-right" />
+				  </div>
+				    <div class="controls col-md-12" style="margin-top:30px;">
+				      <p class="help-block">If you do not find any of the courses you are offering here, you probably have not added it in the course registration section. Please ensure you do this as soon as possible before lecturers start computing result else you might not have your result computed. </p>
 				    </div>
 				  </div>
                     <?php
@@ -135,7 +167,7 @@ function deletes(v)
 
 					 ?>
 				  <div class="controls">
-                  <table width="100%"><tr><th width="10%">Course Code</th><th>Course Title</th><th>Grade</th><th>Units</th><th>Marks</th><th>GP</th><th>TGP</th>
+                  <table class="table table-bordered"><tr><th width="10%">Course Code</th><th>Course Title</th><th>Grade</th><th>Units</th><th>Marks</th><th>GP</th><th>TGP</th>
                   </tr>
                   <?php
 				  $up = 0;
@@ -227,10 +259,10 @@ function deletes(v)
 						
 					} 
 					$csa = $score/$counter;
-					?></table><br /><table>
-					<tr><th align="left" colspan="6">Summary for <?php $_SESSION['session_year'] ?> Session (<?php echo $counter?> Courses)</th></tr>
-                  <tr><th></th>
-                    <th align="right">Units Registered &nbsp;&nbsp;<?php if($tunit > 11 && $unit < 19){ echo $tunit;}else{ echo "<font color=red title='Unit not within range.'> $tunit </font>";} ?></th><th>&nbsp;&nbsp;&nbsp;&nbsp;Units Passed&nbsp;&nbsp;</th><th><?php echo $up; ?></th><th>&nbsp;&nbsp;&nbsp;&nbsp;Weighted GP&nbsp;&nbsp;</th><th><?php echo $wgp; ?></th><th>&nbsp;&nbsp;&nbsp;&nbsp;CSA&nbsp;&nbsp; </th><th><?php echo $csa ?></th></tr>
+					?></table><br /><table class="table table-bordered">
+					<h4 style="color:#008000;">Summary for <?php $_SESSION['session_year'] ?> Session (<?php echo $counter?> Courses)</h4>
+                  <tr>		
+                    <th>Units Registered &nbsp;&nbsp;<?php if($tunit > 11 && $unit < 19){ echo $tunit;}else{ echo "<font color=red title='Unit not within range.'> $tunit </font>";} ?></th><th>&nbsp;&nbsp;&nbsp;&nbsp;Units Passed&nbsp;&nbsp;</th><th><?php echo $up; ?></th><th>&nbsp;&nbsp;&nbsp;&nbsp;Weighted GP&nbsp;&nbsp;</th><th><?php echo $wgp; ?></th><th>&nbsp;&nbsp;&nbsp;&nbsp;CSA&nbsp;&nbsp; </th><th><?php echo $csa ?></th></tr>
                     <tr><td width="100%" colspan="7" align="right">&nbsp; <img src="images/print.jpg" width="50" height="40" alt="Print" onClick="printElem()"/></td></tr>
                   </table>
                  
@@ -238,10 +270,9 @@ function deletes(v)
                   <h3 class="form-section-title">&nbsp;</h3><span style="display:none;" id="englishName"><div id="englishNameAlert" class="alert alert-info">Some systems cannot handle your name as you have entered it. Please enter your name using only the English alphabet in the fields below.</div><div class="control-group"><label for="englishFirstName" class="control-label">English First Name</label><div class="controls"><input id="englishFirstName" name="englishFirstName" type="text" value="" maxlength="45"/></div></div><div class="control-group"><label for="englishMiddleName" class="control-label">English Middle Name</label><div class="controls"><input id="englishMiddleName" name="englishMiddleName" type="text" value="" maxlength="25"/></div></div><div class="control-group"><label for="englishLastName" class="control-label">English Last Name</label><div class="controls"><input id="englishLastName" name="englishLastName" class="english" type="text" value="" maxlength="45"/></div></div></span><div class="form-actions"></div></fieldset></form></div></div>
 				
 				 <div class="clear"></div>
-			  </div>
-			</div>
-	</div>
+			 
     <?php include('footer.php'); ?>
+
 </body>
 </html>
 
